@@ -1,10 +1,11 @@
 package com.jameseng.workshopmongodb.resources;
 
-import com.jameseng.workshopmongodb.domain.User;
+import com.jameseng.workshopmongodb.dto.UserDTO;
 import com.jameseng.workshopmongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,10 +28,22 @@ public class UserResource {
         return ResponseEntity.ok().body(list);
     }*/
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<List<User>> findAll() {
         List<User> list = userService.findAll();
         return ResponseEntity.ok().body(list);
+    }*/
+
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> findAll() {
+        List<UserDTO> listDto = userService.findAll();
+        return ResponseEntity.ok().body(listDto);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+        UserDTO userDto = userService.findById(id);
+        return ResponseEntity.ok().body(userDto);
     }
 
 
