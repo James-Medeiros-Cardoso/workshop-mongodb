@@ -37,12 +37,16 @@ public class UserService {
     @Transactional
     public UserDTO insert(UserDTO userDto) {
         User user = new User();
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
+        copyDtoToEntity(userDto, user);
+        user = userRepository.save(user);
+        return new UserDTO(user);
+    }
 
-        System.out.println("\n user.name =  \n" + user.getName());
-        System.out.println("\n user.email =  \n" + user.getEmail());
-
+    @Transactional
+    public UserDTO update(String id, UserDTO userDto) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                "UserService/Entity not found. Id = " + id));
+        copyDtoToEntity(userDto, user);
         user = userRepository.save(user);
         return new UserDTO(user);
     }
@@ -52,5 +56,10 @@ public class UserService {
         userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
                 "UserService/Entity not found. Id = " + id));
         userRepository.deleteById(id);
+    }
+
+    private void copyDtoToEntity(UserDTO userDto, User user) {
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
     }
 }
