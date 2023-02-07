@@ -1,6 +1,5 @@
 package com.jameseng.workshopmongodb.domain;
 
-import com.jameseng.workshopmongodb.dto.AuthorDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-@Document
+/*@Document
 public class Post implements Serializable {
 
     @Id
@@ -83,9 +82,9 @@ public class Post implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
-}
+}*/
 
-/*@Document
+@Document
 public class Post implements Serializable {
 
     @Id
@@ -160,4 +159,4 @@ public class Post implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
-}*/
+}

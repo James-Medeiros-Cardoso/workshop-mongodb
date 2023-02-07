@@ -31,7 +31,7 @@ public class PostDTO implements Serializable {
         date = post.getDate();
         title = post.getTitle();
         body = post.getBody();
-        author = post.getAuthor();
+        author = new AuthorDTO(post.getAuthor()); //author = post.getAuthor();
     }
 
     public String getId() {

@@ -10,6 +10,8 @@ public class UserDTO implements Serializable {
     private String name;
     private String email;
 
+    //private List<PostDTO> posts = new ArrayList<>();
+
     public UserDTO() {
 
     }
@@ -24,6 +26,7 @@ public class UserDTO implements Serializable {
         id = user.getId();
         name = user.getName();
         email = user.getEmail();
+        //setPosts(user.getPosts().stream().map(x -> new PostDTO(x)).collect(Collectors.toList()));
     }
 
     public String getId() {

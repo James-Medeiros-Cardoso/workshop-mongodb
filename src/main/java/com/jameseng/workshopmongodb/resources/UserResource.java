@@ -1,5 +1,6 @@
 package com.jameseng.workshopmongodb.resources;
 
+import com.jameseng.workshopmongodb.dto.PostDTO;
 import com.jameseng.workshopmongodb.dto.UserDTO;
 import com.jameseng.workshopmongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,12 @@ public class UserResource {
     public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         UserDTO userDto = userService.findById(id);
         return ResponseEntity.ok().body(userDto);
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<PostDTO>> findPostsByUserId(@PathVariable String id) {
+        List<PostDTO> posts = userService.findPostsByUserId(id);
+        return ResponseEntity.ok().body(posts);
     }
 
     @PostMapping

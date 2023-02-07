@@ -1,6 +1,8 @@
 package com.jameseng.workshopmongodb.services;
 
+import com.jameseng.workshopmongodb.domain.Post;
 import com.jameseng.workshopmongodb.domain.User;
+import com.jameseng.workshopmongodb.dto.PostDTO;
 import com.jameseng.workshopmongodb.dto.UserDTO;
 import com.jameseng.workshopmongodb.repositories.UserRepository;
 import com.jameseng.workshopmongodb.services.exceptions.ObjectNotFoundException;
@@ -34,6 +36,14 @@ public class UserService {
         return new UserDTO(user);
     }
 
+    @Transactional(readOnly = true)
+    public List<PostDTO> findPostsByUserId(String id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+                "UserService/Entity not found. Id = " + id));
+        List<Post> posts = user.getPosts();
+        return posts.stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
+    }
+
     @Transactional
     public UserDTO insert(UserDTO userDto) {
         User user = new User();
@@ -51,7 +61,6 @@ public class UserService {
         return new UserDTO(user);
     }
 
-    @Transactional
     public void delete(String id) {
         userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
                 "UserService/Entity not found. Id = " + id));
