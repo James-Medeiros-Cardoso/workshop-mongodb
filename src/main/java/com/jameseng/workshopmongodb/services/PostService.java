@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PostService {
 
@@ -19,6 +22,12 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
                 "PostService/Entity not found. Id = " + id));
         return new PostDTO(post);
+    }
+
+    @Transactional
+    public List<PostDTO> findByTitleContainingIgnoreCase(String text) {
+        List<Post> posts = postRepository.findByTitleContainingIgnoreCase(text);
+        return posts.stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
     }
 
 }
