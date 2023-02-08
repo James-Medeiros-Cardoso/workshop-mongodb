@@ -26,7 +26,8 @@ public class PostService {
 
     @Transactional
     public List<PostDTO> findByTitleContainingIgnoreCase(String text) {
-        List<Post> posts = postRepository.findByTitleContainingIgnoreCase(text);
+        //List<Post> posts = postRepository.findByTitleContainingIgnoreCase(text);
+        List<Post> posts = postRepository.searchByTitle(text);
         return posts.stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
     }
 
