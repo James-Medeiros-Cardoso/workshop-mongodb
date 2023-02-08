@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,12 @@ public class PostService {
     public List<PostDTO> findByTitleContainingIgnoreCase(String text) {
         //List<Post> posts = postRepository.findByTitleContainingIgnoreCase(text);
         List<Post> posts = postRepository.searchByTitle(text);
+        return posts.stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
+    }
+
+    public List<PostDTO> fullSearch(String text, Date minDate, Date maxDate) {
+        maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000); // adicionar mais um dia na maxDate
+        List<Post> posts = postRepository.fullSearch(text, minDate, maxDate);
         return posts.stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
     }
 
